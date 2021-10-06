@@ -1,66 +1,135 @@
-pragma solidity 0.6.12;
-/* AIM: Invest money by players- anywhere in the world 
-get- balance: current balance 
-owner(Manager)gives a coomans and it should send total money to a randomly selcted player
-*/
+pragma solidity 0.6.12; 
+/* AIM: 
 
-contract Lottery {
-    address public manager;
-    address payable[] public players;
-    // struct Player {
-    //     address payable investor;
-    //     uint amount;
-    // }
-    // Player[] public players;
-    // constructor - set the manager
-    constructor () public {
-        manager = msg.sender;
+1. A player (Investors) with an ehtereum wallet account can invest a mimimum 1.3 ether in the scheme.  
+
+2. Event is logged.
+
+2.  Assertain current balance of account (total ether staked).  
+
+3. //Assertain Total number of players 
+
+3. Manager can't invest in the scheme!
+        
+
+4. Randomly select an index within the index range of enlisted players/Investors.
+
+5. Pay player: pay ramdomly selected number. 
+
+*/
+contract test {
+    address public manager; //operator of account 
+    address payable [] public players; //enlisted players of the scheme
+    mapping (address=>uint) wallet;  
+    
+//define manager 
+    constructor() public {
+       manager = msg.sender; 
     }
-    modifier onlyManager() {
-        require(msg.sender == manager,"Only manager can call this function");
-        _;
+   
+   //track investor transactions  
+   event trackInvestors(address _player, uint _value); 
+   event trackWinner(address _winner, uint _value);
+   
+   
+   
+   modifier onlyManager (){
+       require(manager == msg.sender, 'Only Manager can perform this function'); 
+       _;
+       
+   }
+   
+   /*
+    modifier NodoubleBet() {
+        for( uint a = 0; a < players.length; a ++){
+            if (players[a] == msg.sender){
+                revert('Cant bet twice'); 
+            }else {
+                _;
+            }
+        }
     }
-    // event to the frontend
-    event playerInvested(address player, uint amount);
-    event winnerSelected(address winner, uint amount);
-    // Invest money by players - anyone in the world
-    function invest() payable public { // manager should not invest
-        require(msg.sender != manager,"Manager cannot invest");
-        // the person should invest minimum 0.1 ether - exactly invest 3 ether
-        require(msg.value >= 0.1 ether,"Invest minimum of 0.1 ether");
-        // i want to keep a track of who all invested
+   
+   */
+   
+    //add players function 
+    function addInvestor() payable public {
+        //we dont want manager to enage in the scheme 
+        require(msg.sender != manager,'Manager can not bet');
+        
+       
+        for( uint a = 0; a < players.length; a ++){
+            if (players[a] == msg.sender){
+                revert('Cant bet twice');
+            
+            }
+        }
+       
+        
+        //cannot enter scheme with less than 1.3 ehter
+        require(msg.value> 1 ether,'must be 2 ether'); 
+        
+        
+        //add player (palyers are added as the enter the scheme)
         players.push(msg.sender);
-        // Player memory tempPlayer;
-        // tempPlayer.investor = msg.sender;
-        // tempPlayer.amount = msg.value;
-        emit playerInvested(msg.sender,msg.value);
+        wallet[msg.sender] = msg.value; 
+        
+        //log 
+        emit trackInvestors(msg.sender, msg.value); 
+    } 
+    
+    //get balance of scheme 
+    function getBalance() public view returns(uint){
+        return address(this).balance; 
+        
     }
-    // get balance - current balance
-    function getBalance() public view onlyManager returns(uint) {
-        // only manager should see balance
-        return address(this).balance;
+    
+    //get number of players  
+    function NumberOfPlayers() public view returns(uint){
+        return players.length; 
     }
-    //random function
-    function random() private view returns(uint) {
-        return uint(keccak256(abi.encodePacked(block.timestamp,block.difficulty,players.length)));
+    
+    //checks how much each investor bet 
+    function getAmountBet(address _investor) public view onlyManager returns(uint) {
+        return wallet[_investor]; 
     }
-    // manager clicks a function , it should
-    function selectWinner() public onlyManager {
-        // only manager can call this function
+    
+    //generate ramdom number 
+    function random() private view returns (uint){
+        return uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, players.length)));
+    }
+    
+    
+    //ramdonly select and pay winner 
+    function selectWinner() public payable onlyManager returns(bool success){
+        
+        //pass generated random number 
+       uint R = random(); 
         //select a random number - pseudo random number - do not use this in production
         // Use ORACLES to find a random number
-        // first take some global variables, encode it, hash it, convert to uint
-        uint r = random();
+        // first take some global variables, encode it, hash it, convert to uint //select a random number - pseudo random number - do not use this in production
+        
+        
         //modulo it with number of players
-        uint index = r % players.length;
-        //map the reminder to a index in the array
-        address payable winner = players[index];
-        //.investor;
-        emit winnerSelected(winner,address(this).balance);
+        uint i = R % players.length;  
+        
+        
+        //map address to index numbe in array 
+        address payable winner = players[i]; 
+        
+        //log
+        emit trackInvestors(winner, address(this).balance); 
+        
         //transfer all the money in the contract to the address in the array
         winner.transfer(address(this).balance);
+        
+        
         //then make the array empty
-        players = new address payable[](0);
+        players = new address payable [](0) ; 
+        
+        return true; 
     }
+    
+    
+    
 }
-
