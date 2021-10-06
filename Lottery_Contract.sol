@@ -38,20 +38,7 @@ contract test {
        _;
        
    }
-   
-   /*
-    modifier NodoubleBet() {
-        for( uint a = 0; a < players.length; a ++){
-            if (players[a] == msg.sender){
-                revert('Cant bet twice'); 
-            }else {
-                _;
-            }
-        }
-    }
-   
-   */
-   
+  
     //add players function 
     function addInvestor() payable public {
         //we dont want manager to enage in the scheme 
