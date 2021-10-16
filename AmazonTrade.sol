@@ -3,7 +3,7 @@ pragma solidity 0.6.12;
 /* Idea: 
 A contract that allows sellers register products by entering details of the product.
 
-buyers can buy product using the id of the product 
+Buyers can buy product using the id of the product. 
 
 Once delivery of product is confirmed by the buy, the the money is transfered to seller. 
 */
