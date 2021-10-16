@@ -7,11 +7,11 @@ string public symbol; // Usually is 3 or 4 letters long
 uint8 public decimals; // maximum is 18 decimals
 uint256 public supply;
 
-mapping(address => uint) public balances;
-mapping(address => mapping(address => uint)) public allowed;
+mapping(address => uint) public balances;//maps the balance to the address
+mapping(address => mapping(address => uint)) public allowed; //maps the senders and delegates address
 //Events
-event Transfer(address sender, address receiver, uint256 tokens);
-event Approval(address sender, address delegate, uint256 tokens);
+event Transfer(address sender, address receiver, uint256 tokens); //keeps track of what has happened/ logs the event
+event Approval(address sender, address delegate, uint256 tokens); //keeps track of what has happened/ logs the event
 //constructor
 constructor (string memory _name, string memory _symbol, uint8 _decimals, uint256 _supply) public {
     require(_supply <= 1000000000,"Maximum supply can only be a billion tokens");
