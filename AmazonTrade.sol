@@ -5,7 +5,7 @@ A contract that allows sellers register products by entering details of the prod
 
 Buyers can buy product using the id of the product. 
 
-Once delivery of product is confirmed by the buy, the the money is transfered to seller. 
+Once delivery of product is confirmed by the buyer, the the money is transfered to seller. 
 */
 
 
