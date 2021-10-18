@@ -3,7 +3,7 @@ pragma solidity 0.6.12;
 
 1. A player (Investors) with an ehtereum wallet account can invest a mimimum 1.3 ether in the scheme.  
 
-2. Event is logged.
+2. Events are logged.
 
 2.  Assertain current balance of account (total ether staked).  
 
