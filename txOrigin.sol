@@ -1,5 +1,9 @@
 pragma solidity 0.6.12;
 
+//so when you run this, msg.sender will show the address of contract B, meaning that contract B called the function
+//while tx.origin will show the callers externally owned address, which is the address of the person calling the function/ origin of the transaction
+
+
 contract A {
     address public msgSender;
     address public txOrigin;
@@ -16,5 +20,3 @@ contract B {
     }
 }
 
-//so when you run this, msg.sender will show the address of contract B, meaning that contract B called the function
-//while tx.origin will show the callers externally owned address, which is the address of the person calling the function/ origin of the transaction
