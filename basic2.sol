@@ -1,5 +1,6 @@
 pragma solidity 0.6.12;
 
+//a listing of variable types, functions declarations, etc. 
 contract Basics {
     //integer, string, bool, bytes
     //arrays, enum, struct, mapping (dictionary in python)
