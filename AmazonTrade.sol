@@ -1,6 +1,7 @@
 pragma solidity 0.6.12;
 
 /* Idea: 
+
 A contract that allows sellers register products by entering details of the product.
 
 Buyers can buy product using the id of the product. 
@@ -32,6 +33,7 @@ contract Amazon {
        require(!destroyed, "contract has been destroyed"); 
        _;
    }
+   
     // Seller has to register and create product
     function register(string memory _title,string memory _desc, uint _price) public isNotDestroyed{
         require(_price > 0,"Price cannot be less than equal to 0");
@@ -45,6 +47,7 @@ contract Amazon {
         counter++; // counter = counter +1;
         emit registered(tempProduct.title,tempProduct.productId);
     }
+    
     // Buyer will pay and buy the product
     function buy(uint _productId) payable public isNotDestroyed{
         // seller should not buy himself
@@ -54,6 +57,7 @@ contract Amazon {
         products[_productId - 1].buyer = msg.sender;
         emit bought(_productId,msg.sender);
     }
+    
     // Buyer confirms delivery and contract will pay to seller
     function delivered(uint _productId) public isNotDestroyed{
         //only buyer can call this function
@@ -70,7 +74,7 @@ contract Amazon {
     function implode() public {
         selfdestruct(products[0].seller); //it destroys the contract an transfers the entire balnce of the contract to the receipient 
     }
-    this function can be better written as seen below
+    this function can be better implemented  as wriiten in the below 2 functions
     */
     
     function implode() public isNotDestroyed{
