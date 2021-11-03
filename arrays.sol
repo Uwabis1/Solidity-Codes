@@ -1,9 +1,9 @@
 pragma solidity >= 0.7.0 < 0.9.0;
 
- // WHAT ARE ARRAYS? :) 
- // Array is a data structure, which stores a fixed-size sequential collection of elements of the same type. 
- //An array is used to store a collection of data, 
- // but it is often more useful to think of an array as a collection of variables of the same type.
+ /* WHAT ARE ARRAYS? 
+ Array is a data structure, which stores a fixed-size sequential collection of elements of the same type. 
+ An array is used to store a collection of data, 
+ but it is often more useful to think of an array as a collection of variables of the same type. */
  
  // 1. How To Write An Array
  // 2. pop, push, and length methods
@@ -39,12 +39,14 @@ contract learnArrays {
         
     }
     
-    // Exercise create a function that can fully remove an item from an array
-    // 1. Create an Empty array called changeArray
-    // 2. Create a function called removeElement which sets the index argument of the array to the last element in the array
-    // 3. remove the last index from that function with the pop method
-    // 4. Create a function called test which pushes 1 2 3 4 into changeArray
-    // 5. remove the element 2 from the array when the contract is called
+    /*
+     Exercise create a function that can fully remove an item from an array
+     1. Create an Empty array called changeArray
+     2. Create a function called removeElement which sets the index argument of the array to the last element in the array
+     3. remove the last index from that function with the pop method
+     4. Create a function called test which pushes 1 2 3 4 into changeArray
+     5. remove the element 2 from the array when the contract is called
+     */
     
     uint[] public changeArray;
     
